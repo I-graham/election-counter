@@ -71,8 +71,6 @@ for race, rankings in votes.items():
 
 	#eliminate candidates until only one is left
 	while len(counter) > 1:
-		print(f"{race} winner: {candidate}")
-
 		#clear votes
 		for candidate in counter.keys():
 			counter[candidate] = 0
@@ -94,10 +92,11 @@ for race, rankings in votes.items():
 		#should be handled
 		if list(counter.values()).count(min(counter.values())) > 1:
 			for vote in rankings.values():
-				for i in range(1, len(candidates)):
+				for i in range(1, len(candidates)+1):
 					if vote[str(i)] in last:
 						last[vote[str(i)]] += 1
 						break
+
 
 			if list(last.values()).count(min(last.values())) > 1:
 				print(f"Tie between candidates in {race} race for last place:")
@@ -107,8 +106,15 @@ for race, rankings in votes.items():
 				print(list(rankings.values()))
 
 				break
+			else:
+				min_votes = min(last.values())
+				last = {cand: 0 for cand, votes in last.items() if votes == min_votes}
+				cand = list(last.keys())[0]
+				del counter[cand]
+
 
 		else:
 			#eliminate last place candidate if there is no tie
 			cand = list(last.keys())[0]
 			del counter[cand]
+	print(f"{race} winner: {list(counter.keys())[0]}")
