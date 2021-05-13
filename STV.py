@@ -35,7 +35,7 @@ questions = {
 
 eligible_emails=set()
 
-with open("eligible_emails.csv") as eligible:
+with open("eligible_emails.txt") as eligible:
 	for email in eligible.readlines():
 		eligible_emails.add(email.strip())
 
